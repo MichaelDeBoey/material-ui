@@ -1,5 +1,5 @@
-import { unstable_generateUtilityClasses as generateUtilityClasses } from '@mui/utils';
-import generateUtilityClass from '../generateUtilityClass';
+import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
+import generateUtilityClass from '@mui/utils/generateUtilityClass';
 
 export interface IconButtonClasses {
   /** Styles applied to the root element. */
@@ -30,6 +30,10 @@ export interface IconButtonClasses {
   sizeMedium: string;
   /** Styles applied to the root element if `size="large"`. */
   sizeLarge: string;
+  /** Styles applied to the root element if `loading={true}`. */
+  loading: string;
+  /** Styles applied to the loadingIndicator element. */
+  loadingIndicator: string;
 }
 
 export type IconButtonClassKey = keyof IconButtonClasses;
@@ -53,6 +57,8 @@ const iconButtonClasses: IconButtonClasses = generateUtilityClasses('MuiIconButt
   'sizeSmall',
   'sizeMedium',
   'sizeLarge',
+  'loading',
+  'loadingIndicator',
 ]);
 
 export default iconButtonClasses;

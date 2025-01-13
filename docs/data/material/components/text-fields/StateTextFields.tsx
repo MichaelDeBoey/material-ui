@@ -4,24 +4,21 @@ import TextField from '@mui/material/TextField';
 
 export default function StateTextFields() {
   const [name, setName] = React.useState('Cat in the Hat');
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
 
   return (
     <Box
       component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-      }}
+      sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
       noValidate
       autoComplete="off"
     >
       <TextField
-        id="outlined-name"
-        label="Name"
+        id="outlined-controlled"
+        label="Controlled"
         value={name}
-        onChange={handleChange}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setName(event.target.value);
+        }}
       />
       <TextField
         id="outlined-uncontrolled"

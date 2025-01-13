@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { createTheme, ThemeProvider, Box, handleBreakpoints } from '@mui/system';
+import { Box, handleBreakpoints } from '@mui/system';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const customTheme = createTheme({
   unstable_sxConfig: {
@@ -23,15 +24,10 @@ const customTheme = createTheme({
   },
 });
 
-export default function ExtendSxProp() {
+export default function ExtendTheSxProp() {
   return (
     <ThemeProvider theme={customTheme}>
-      <Box
-        sx={{
-          size: 10,
-          border: '1px solid black',
-        }}
-      />
+      <Box sx={{ size: 10, border: 1 }} />
     </ThemeProvider>
   );
 }

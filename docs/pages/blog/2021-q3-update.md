@@ -3,8 +3,8 @@ title: Q3 2021 Update
 description: An update on our mission for Q3 2021.
 date: 2021-10-26T00:00:00.000Z
 authors: ['oliviertassinari']
-card: true
 tags: ['Company']
+manualCard: true
 ---
 
 This update covers our progress over the last three months.
@@ -13,9 +13,9 @@ It also covers what we aim to achieve in the months ahead.
 ## Overview
 
 - [Product](#product)
-  - [MUI Core](#mui-core)
-  - [MUI X](#mui-x)
-  - [Design kits](#design-kits)
+  - [MUI Core](#mui-core)
+  - [MUI X](#mui-x)
+  - [Design Kits](#design-kits)
 - [Company](#company)
 - [Our roadmap intent for Q4 2021](#our-roadmap-intent-for-q4-2021)
 
@@ -23,7 +23,7 @@ It also covers what we aim to achieve in the months ahead.
 
 Here are the most significant improvements since early July 2021.
 
-### MUI Core
+### MUI Core
 
 - 🔥 In September we released a new major version: [v5.0.0](https://github.com/mui/material-ui/releases/tag/v5.0.0) (you might have noticed! 😄 ).
   We're excited about what it means for the future of the library, and we hope you are going to enjoy the simplified customization, the extra flexibility, new components, and more.
@@ -37,17 +37,17 @@ Here are the most significant improvements since early July 2021.
   - An icon illustrates the nature of the match; either a page, a header, or a paragraph.
   - Your most recent searches are saved in local storage.
 
-  <img loading="lazy" src="/static/blog/2021-q3-update/old-search.png" alt="" style="width: 596px;" />
+  <img loading="lazy" src="/static/blog/2021-q3-update/old-search.png" alt="" width="1192" height="936" style="width: 596px;" />
 
   <p class="blog-description">Before</p>
 
-  <img loading="lazy" src="/static/blog/2021-q3-update/new-search.png" alt="" style="width: 600px; margin-top: 32px;" />
+  <img loading="lazy" src="/static/blog/2021-q3-update/new-search.png" alt="" width="1200" height="920" style="width: 600px; margin-top: 32px;" />
 
   <p class="blog-description">After</p>
 
 - [Masonry](/material-ui/react-masonry/). We introduced a new component for use when the `Grid` component leads to wasted space. It's frequently used in dashboards.
 
-  <a href="/material-ui/react-masonry/"><img loading="lazy" src="/static/blog/2021-q3-update/masonry.png" style="width: 700px; margin-bottom: 16px;" /></a>
+  <a href="/material-ui/react-masonry/"><img loading="lazy" src="/static/blog/2021-q3-update/masonry.png" style="width: 700px;" width="1400" height="906" alt="react-masonry" /></a>
 
 - We introduced a new [package of components without styles](https://www.npmjs.com/package/@mui/base), laying the foundations for supporting multiple design systems with headless components.
   While it was tough to balance the time between working on v5 stable and developing the unstyled components, we still managed to introduce the first few:
@@ -67,13 +67,13 @@ Here are the most significant improvements since early July 2021.
   - [Modal](/material-ui/react-modal/#unstyled)
 
   ```jsx
-  import ModalUnstyled from '@mui/base/ModalUnstyled';
+  import { ModalUnstyled } from '@mui/base/ModalUnstyled';
   ```
 
   - [Slider](/material-ui/react-slider/#unstyled)
 
   ```jsx
-  import SliderUnstyled from '@mui/base/SliderUnstyled';
+  import { SliderUnstyled } from '@mui/base/SliderUnstyled';
   ```
 
   - [Switch](/material-ui/react-switch/#unstyled)
@@ -85,19 +85,19 @@ Here are the most significant improvements since early July 2021.
   - [Portal](/material-ui/react-portal/#unstyled)
 
   ```jsx
-  import Portal from '@mui/base/Portal';
+  import { Portal } from '@mui/base/Portal';
   ```
 
-  - [TrapFocus](/base/react-focus-trap/)
+  - [FocusTrap](/base-ui/react-focus-trap/)
 
   ```jsx
-  import TrapFocus from '@mui/base/TrapFocus';
+  import { FocusTrap } from '@mui/base/FocusTrap';
   ```
 
-### MUI X
+### MUI X
 
 Last quarter we focused on the data grid components, working towards a stable release.
-We also introduced a brand new [product page](/x/) this quarter to better present what MUI X is about.
+We also introduced a brand new [product page](/x/) this quarter to better present what MUI X is about.
 
 #### Date Picker
 
@@ -109,31 +109,33 @@ The date picker sits at the border between the core component and advanced compo
 #### Data Grid
 
 - 🎉 We released the first stable version: [v4.0.0](https://github.com/mui/mui-x/releases/tag/v4.0.0)!
-  We also released the first v5-beta, to support MUI Core v5,
+  We also released the first v5-beta, to support MUI Core v5,
   and will be working almost exclusively on the v5 release line going forward.
-- 🔎 We also added a [quick-filter demo](/x/react-data-grid/filtering/#quick-filter) to illustrate how it can be implemented,
+- 🔎 We also added a [quick-filter demo](/x/react-data-grid/filtering/quick-filter/) to illustrate how it can be implemented,
   and will add a [built-in](https://github.com/mui/mui-x/issues/202) solution later on.
 
-  <a href="/x/react-data-grid/filtering/#quick-filter"><img loading="lazy" src="/static/blog/2021-q3-update/quick-filter.png" style="width: 700px; margin-bottom: 16px;" /></a>
+  <a href="/x/react-data-grid/filtering/quick-filter/"><img loading="lazy" src="/static/blog/2021-q3-update/quick-filter.png" width="1508" height="542" alt="react-data-grid-quick-filter" /></a>
 
-- 🐛 We fixed several non-idiomatic React patterns, for instance we were not handling controllable props by the book, and as we do in MUI Core.
+- 🐛 We fixed several non-idiomatic React patterns, for instance we were not handling controllable props by the book, and as we do in MUI Core.
 - 🚀 We introduced the [row editing](/x/react-data-grid/editing/#row-editing) feature.
 
-  <img src="/static/blog/2021-q3-update/row-edit.gif" width="851" />
+  <video autoplay muted loop playsinline width="1702" height="764">
+    <source src="/static/blog/2021-q3-update/row-edit.mp4" type="video/mp4" />
+  </video>
 
 - 🦺 We added a [`disableVirtualization`](/x/react-data-grid/virtualization/#disable-virtualization) prop to make it easier to test the data grid without a real browser environment, for example in jsdom with Jest.
 - 🚛 We have added an `onViewportRowsChange` prop as a first step toward being able to lazy load a large dataset.
 - Last but not least, we have resumed the work on [key missing features](https://github.com/mui/mui-x/issues?q=is%3Aopen+label%3A%22linked+in+docs%22+sort%3Areactions-%2B1-desc).
   Print export and tree data are in the pipeline.
 
-### Design kits
+### Design Kits
 
 We introduced a brand new [product page](/design-kits/) this quarter to better present the design kits.
 
 #### Figma
 
-The kit is now up-to-date with MUI Core v5,
-and also includes the MUI X components. And, as always, we have been refining it in small areas for issues raised by our users in the support channel.
+The kit is now up-to-date with MUI Core v5,
+and also includes the MUI X components. And, as always, we have been refining it in small areas for issues raised by our users in the support channel.
 
 #### Adobe XD
 
@@ -150,9 +152,9 @@ No updates.
 We held our first company retreat 🏝 in Lisbon, Portugal 🇵🇹 ,
 for members of the team that were not prevented by COVID-19 related travel restrictions, and who felt safe enough to travel.
 Less than half the company made it, but it was still fun!
-We spent half the time doing a [Hackathon](https://twitter.com/olivtassinari/status/1441773885259583491) and the other half on activities (surfing, biking, winery tour, and sightseeing).
+We spent half the time doing a [Hackathon](https://x.com/olivtassinari/status/1441773885259583491) and the other half on activities (surfing, biking, winery tour, and sightseeing).
 
-<img loading="lazy" src="/static/blog/2021-q3-update/retreat.jpeg" alt="" style="width: 596px; margin-bottom: 8px" />
+<img loading="lazy" src="/static/blog/2021-q3-update/retreat.jpeg" alt="" width="1613" height="1210" />
 
 <p class="blog-description">Sightseeing in Lisbon</p>
 
@@ -167,7 +169,7 @@ We spent half the time doing a [Hackathon](https://twitter.com/olivtassinari/sta
 
 We welcomed one new member to the company this quarter 🏢:
 
-- Benny was our first intern, and is now the first junior developer on the MUI Core team.
+- Benny was our first intern, and is now the first junior developer on the MUI Core team.
 
   <img loading="lazy" src="/static/blog/2021-q3-update/benny.jpg" alt="Benny" style="width: 160px; height: 160px; margin: unset; margin-bottom: 24px; border-radius: 2px;" />
 
@@ -187,23 +189,23 @@ but it was only after we secured [mui.com](https://mui.com/), the GitHub [`@mui`
 
 We'll do our best, no guarantee!
 
-### MUI Core
+### MUI Core
 
-- 🚀 We will double down on v5 before starting to solve new large problems, e.g. a revamp of the select.
+- 🚀 We will double down on v5 before starting to solve new large problems, for example a revamp of the select.
   We have made bold changes in this version since v4, but until recently, only a small percentage of the community was using v5.
   In the last few weeks, we have seen a strong influx of feedback from the community.
   We need to make the most of this feedback to solve regressions, improve the documentation for the new APIs, adjust the tradeoffs we took in the light of more information, and more.
   [15%](https://npm-stat.com/charts.html?package=%40material-ui%2Fcore&package=%40mui%2Fmaterial&from=2020-10-25&to=2021-10-15) of the community has migrated, so far.
-- 🦴 Migrate more components to `@mui/base`. [Michał](https://github.com/michaldudak) has recently added support for the [Button](https://mui.com/base/react-button/).
-  You can follow our progress in the [umbrella issue](https://github.com/mui/material-ui/issues/27170).
+- 🦴 Migrate more components to `@mui/base`. [Michał](https://github.com/michaldudak) has recently added support for the [Button](https://mui.com/base-ui/react-button/).
+  You can follow our progress in the [umbrella issue](https://github.com/mui/base-ui/issues/10).
 - 🎨 We are [exploring](https://github.com/mui/material-ui/discussions/29024) the introduction of CSS variables.
-  Since v5, MUI is no longer actively supporting IE 11. Dropping this browser requirement unlocks new capabilities of the web platform.
+  Since v5, Material UI is no longer actively supporting IE 11. Dropping this browser requirement unlocks new capabilities of the web platform.
 - 🌈 Resume work on the second design system.
   Some users (and potential users) dislike Material Design. We'll try to make the second design system one that they love! You can check our [first RFC](https://github.com/mui/material-ui/discussions/29024).
-- 🗓 Execute on all of the items in the [public roadmap](https://github.com/mui/material-ui/projects/25).
+- 🗓 Execute on all of the items in the [public roadmap](https://github.com/orgs/mui/projects/23/views/12).
 - ❓ Please upvote [GitHub issues](https://github.com/mui/material-ui/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) if you want us to focus on a specific problem. The number of 👍 helps us to prioritize.
 
-### MUI X
+### MUI X
 
 #### Data Grid
 
@@ -213,7 +215,7 @@ We have planned to:
 - ✨ Release the tree data feature.
 - ✨ Revamp the virtualization to yield better rendering performance and fix bugs.
   It unlocks new features like column pinning and lazy loading.
-- 🗓 Execute on all of the items in the [public roadmap](https://github.com/mui/mui-x/projects/1).
+- 🗓 Execute on all of the items in the [public roadmap](https://github.com/orgs/mui/projects/35).
 - ❓ Please upvote [GitHub issues](https://github.com/mui/mui-x/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) if you want us to focus on a specific problem. The number of 👍 helps us to prioritize.
 
 #### Date Picker
@@ -223,10 +225,10 @@ No plans. We probably won't progress its development this quarter.
 However, we are growing the team.
 We plan to resume work on it in Q1 2022, starting with the equivalent of one full-time developer.
 
-### Design kits
+### Design Kits
 
 We will release a v5 for Sketch and Adobe XD, as we have already done for Figma.
-While the visual difference between MUI Core v4 and v5 is not major, we still need to sync the design components.
+While the visual difference between MUI Core v4 and v5 is not major, we still need to sync the design components.
 
 ### Company
 

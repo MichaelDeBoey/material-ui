@@ -1,0 +1,318 @@
+[
+  {
+    "name": "Olivier Tassinari",
+    "title": "Co-founder, CEO",
+    "location": "Paris, France",
+    "locationCountry": "fr",
+    "about": "Exercise addict and lifelong learner.",
+    "twitter": "olivtassinari",
+    "github": "oliviertassinari"
+  },
+  {
+    "name": "Matt Brookes",
+    "title": "Co-founder, Head of Sales",
+    "location": "London, UK",
+    "locationCountry": "gb",
+    "about": "When I'm not 👨🏻‍💻, I'm 🧗🏼‍♂️.",
+    "twitter": "randomtechdude",
+    "github": "mbrookes"
+  },
+  {
+    "name": "Marija Najdova",
+    "title": "Engineering Manager - Core",
+    "location": "Skopje, North Macedonia",
+    "locationCountry": "mk",
+    "about": "I do karate 🥋 and read 📚. A lot!",
+    "twitter": "marijanajdova",
+    "github": "mnajdova"
+  },
+  {
+    "name": "Danail Hadjiatanasov",
+    "title": "Engineering Manager - X",
+    "location": "Sofia, Bulgaria",
+    "locationCountry": "bg",
+    "about": "Boringly normal, geek deep down. I like 🚗 and 🏂.",
+    "twitter": "danail_h",
+    "github": "DanailH"
+  },
+  {
+    "name": "Michał Dudak",
+    "title": "Software Engineer - Core",
+    "location": "Silesia, Poland",
+    "locationCountry": "pl",
+    "about": "Motorcyclist, gamer, and coder (UI and more!).",
+    "twitter": "michaldudak",
+    "github": "michaldudak"
+  },
+  {
+    "name": "Jun Kunaporn",
+    "title": "Software Engineer - Core",
+    "location": "Bangkok, Thailand",
+    "locationCountry": "th",
+    "about": "UI Lover and ⛷ skiing newbie.",
+    "twitter": "siriwatknp",
+    "github": "siriwatknp"
+  },
+  {
+    "name": "Flavien Delangle",
+    "title": "Tech Lead - X",
+    "location": "Lille, France",
+    "about": "Love cycling 🚴‍♂️ and reading 📚.",
+    "locationCountry": "fr",
+    "github": "flaviendelangle"
+  },
+  {
+    "name": "Alexandre Fauquette",
+    "title": "Software Engineer - X",
+    "location": "Nancy, France",
+    "locationCountry": "fr",
+    "about": "Love hacking and cycling 🚴‍♂️.",
+    "github": "alexfauquette"
+  },
+  {
+    "name": "Bharat Kashyap",
+    "title": "Software Engineer - Toolpad",
+    "location": "New Delhi, India",
+    "locationCountry": "in",
+    "about": "Trains 🚅 , architecture 🏛️ , and psychology 🧠 .",
+    "twitter": "bharattttttt",
+    "github": "bharatkashyap"
+  },
+  {
+    "name": "Jan Potoms",
+    "title": "Tech Lead - Toolpad",
+    "location": "Brussels, Belgium",
+    "locationCountry": "be",
+    "about": "Always curious, I enjoy cinema and hiking.",
+    "github": "Janpot"
+  },
+  {
+    "name": "Prakhar Gupta",
+    "title": "Product Manager - Toolpad",
+    "location": "New Delhi, India",
+    "locationCountry": "in",
+    "about": "Into sports and hiking!",
+    "twitter": "gprakhar123",
+    "github": "prakhargupta1"
+  },
+  {
+    "name": "José Freitas",
+    "title": "Technical Product Manager - X",
+    "location": "Augsburg, Germany",
+    "locationCountry": "de",
+    "about": "Art, fiction, and bar philosophy.",
+    "twitter": "zehdefreitas",
+    "github": "joserodolfofreitas"
+  },
+  {
+    "name": "Andrii Cherniavskyi",
+    "title": "Tech Lead - X",
+    "location": "Wrocław, Poland",
+    "locationCountry": "pl",
+    "about": "Love playing music - electric and bass guitar 🎸.",
+    "twitter": "iamcherniavskii",
+    "github": "cherniavskii"
+  },
+  {
+    "name": "Sam Sycamore",
+    "title": "Developer Advocate",
+    "location": "Saint Paul, Minnesota, USA",
+    "locationCountry": "us",
+    "about": "Musician and edible wild plant enthusiast 🌱.",
+    "github": "samuelsycamore"
+  },
+  {
+    "name": "Pedro Ferreira",
+    "title": "Software Engineer - Toolpad",
+    "location": "Porto, Portugal",
+    "locationCountry": "pt",
+    "about": "Passionate about videogames and football.",
+    "github": "apedroferreira"
+  },
+  {
+    "name": "Greg Abaoag",
+    "title": "Executive Assistant",
+    "location": "Philippines",
+    "locationCountry": "ph",
+    "about": "Loves DIY, singing and learning.",
+    "github": "zannager"
+  },
+  {
+    "name": "Tina Deinekhovska",
+    "title": "Business Administrator",
+    "location": "London, UK",
+    "locationCountry": "gb",
+    "about": "Empathic art-lover, incurable optimist keen on biking, gardening.",
+    "github": "TinaDein"
+  },
+  {
+    "name": "Lukas Tyla",
+    "title": "Software Engineer - X",
+    "location": "Vilnius, Lithuania",
+    "locationCountry": "lt",
+    "about": "Learning and experimenting 📚.",
+    "github": "LukasTy"
+  },
+  {
+    "name": "Bilal Shafi",
+    "title": "Software Engineer - X",
+    "location": "Islamabad, Pakistan",
+    "locationCountry": "pk",
+    "about": "DIY 🛠️, Learning 📚 and 🏓.",
+    "twitter": "MBilalShafi",
+    "github": "MBilalShafi"
+  },
+  {
+    "name": "Albert Yu",
+    "title": "Software Engineer - Core",
+    "location": "Hong Kong",
+    "locationCountry": "hk",
+    "about": "Minimalist, dog lover 🏔🐕.",
+    "github": "mj12albert",
+    "twitter": "mj12albert"
+  },
+  {
+    "name": "Romain Grégoire",
+    "title": "Software Engineer - X",
+    "location": "Montréal, Canada",
+    "locationCountry": "ca",
+    "about": "Open-source tinkerer.",
+    "github": "romgrk",
+    "twitter": "romgrk"
+  },
+  {
+    "name": "Victor Zanivan",
+    "title": "Senior Designer - Core",
+    "location": "São Paulo, Brazil",
+    "locationCountry": "br",
+    "about": "Very geek 🎮 and love to watch/play football ⚽️.",
+    "github": "zanivan",
+    "twitter": "Zanivan_"
+  },
+  {
+    "name": "Diego Andai",
+    "title": "Software Engineer - Core",
+    "location": "Santiago, Chile",
+    "locationCountry": "cl",
+    "about": "I love tennis 🎾 and cats 🐈.",
+    "twitter": "DiegoAndaiC",
+    "github": "DiegoAndai"
+  },
+  {
+    "name": "Brijesh Bittu",
+    "title": "Software Engineer - Core",
+    "location": "Bengaluru, India",
+    "locationCountry": "in",
+    "about": "🏊🏼 Swimming and 🚗 driving newbie. Loves cooking.",
+    "github": "brijeshb42"
+  },
+  {
+    "name": "Raffaella Luzi",
+    "title": "Head of Operations",
+    "location": "Rome, Italy",
+    "locationCountry": "it",
+    "about": "NYT crossword 📝 in one hand and a croissant 🥐 in the other.",
+    "github": "rluzists1"
+  },
+  {
+    "name": "Nora Leonte",
+    "title": "Design Engineer - X",
+    "location": "Cluj-Napoca, Romania",
+    "locationCountry": "ro",
+    "about": "Art enthusiast 🎨 outdoor person 🌳 animal lover 🐾.",
+    "github": "noraleonte"
+  },
+  {
+    "name": "Michel Engelen",
+    "title": "React Community Engineer - X",
+    "location": "Zeven, Germany",
+    "locationCountry": "de",
+    "about": "Geeking out on Badminton 🏸, everything Japan 🇯🇵 and Pizza 🍕.",
+    "twitter": "jsNerdic",
+    "github": "michelengelen"
+  },
+  {
+    "name": "Vadym Raksha",
+    "title": "Product Engineer - Store",
+    "location": "Prague, Czech Republic",
+    "locationCountry": "cz",
+    "about": "Product experience geek 🛋, Mediterranean vibes 🍊.",
+    "twitter": "vadym_raksha",
+    "github": "hasdfa"
+  },
+  {
+    "name": "Nadja Kovacev",
+    "title": "Talent & Culture Partner",
+    "location": "Novi Sad, Serbia",
+    "locationCountry": "rs",
+    "about": "🧠 Psychology geek, 🏂 amateur snowboarder, and 𐃡 pottery enthusiast.",
+    "github": "nadjakovacev"
+  },
+  {
+    "name": "James Nelson",
+    "title": "Software Engineer - Base UI",
+    "location": "Gold Coast, Australia",
+    "locationCountry": "au",
+    "about": "Enjoy creating open source libraries and reading about AI 🤖.",
+    "twitter": "atomiksdev",
+    "github": "atomiks"
+  },
+  {
+    "name": "Aarón García",
+    "title": "Design Engineer - Core",
+    "location": "Alicante, Spain",
+    "locationCountry": "es",
+    "about": "Minimalism, web development, user experience, football, cycling.",
+    "twitter": "aarongarciah",
+    "github": "aarongarciah"
+  },
+  {
+    "name": "Jose Quintas",
+    "title": "React Engineer - X",
+    "location": "Amsterdam, Netherlands",
+    "locationCountry": "nl",
+    "about": "A general knowledge gatherer. Gamer and programmer in the off hours.",
+    "github": "JCQuintas"
+  },
+  {
+    "name": "Arthur Balduini",
+    "title": "React Engineer - X",
+    "location": "Paris, France",
+    "locationCountry": "fr",
+    "about": "Cooking 🍳, plant caring 🪴 and literature 📖.",
+    "github": "arthurbalduini"
+  },
+  {
+    "name": "Kenan Yusuf",
+    "title": "Design Engineer - X",
+    "location": "London, UK",
+    "locationCountry": "gb",
+    "about": "Amateur cook, DIYer, and film photographer.",
+    "twitter": "KebabYusuf",
+    "github": "KenanYusuf"
+  },
+  {
+    "name": "Nikita Ossei",
+    "title": "Customer Support",
+    "location": "London, United Kingdom",
+    "locationCountry": "gb",
+    "about": "Astrology ♊️, learning 📚 and designing stuff 🎨.",
+    "github": "nikitaa24"
+  },
+  {
+    "name": "Armin Mehinovic",
+    "title": "React Engineer - X",
+    "location": "Amsterdam, Netherlands",
+    "locationCountry": "nl",
+    "about": "♟️ Chess, 🛠️ Small DIY projects and learning about space 🌌.",
+    "github": "arminmeh"
+  },
+  {
+    "name": "Alejandra Thomas",
+    "title": "Content Engineer",
+    "location": "New York, US",
+    "locationCountry": "us",
+    "about": "Books 📚, long coffee walks ☕️, and my cat 🐈‍⬛.",
+    "github": "alelthomas"
+  }
+]
