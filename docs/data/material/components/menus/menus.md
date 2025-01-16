@@ -1,11 +1,12 @@
 ---
-product: material-ui
+productId: material-ui
 title: React Menu component
 components: Menu, MenuItem, MenuList, ClickAwayListener, Popover, Popper
 githubLabel: 'component: menu'
 materialDesign: https://m2.material.io/components/menus
-waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/
-unstyled: /base/react-menu/
+waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/
+unstyled: /base-ui/react-menu/
+githubSource: packages/mui-material/src/Menu
 ---
 
 # Menu
@@ -14,15 +15,21 @@ unstyled: /base/react-menu/
 
 A menu displays a list of choices on a temporary surface. It appears when the user interacts with a button, or other control.
 
-{{"component": "modules/components/ComponentLinkHeader.js"}}
+{{"component": "@mui/docs/ComponentLinkHeader"}}
+
+## Introduction
+
+Menus are implemented using a collection of related components:
+
+- Menu: The container/surface of the menu.
+- Menu Item: An option for users to select from the menu.
+- Menu List (optional): Alternative composable container for Menu Items—see [Composition with Menu List](#composition-with-menu-list) for details.
 
 ## Basic menu
 
 A basic menu opens over the anchor element by default (this option can be [changed](#menu-positioning) via props). When close to a screen edge, a basic menu vertically realigns to make sure that all menu items are completely visible.
 
-Choosing an option should immediately ideally commit the option and close the menu.
-
-**Disambiguation**: In contrast to simple menus, simple dialogs can present additional detail related to the options available for a list item or provide navigational or orthogonal actions related to the primary task. Although they can display the same content, simple menus are preferred over simple dialogs because simple menus are less disruptive to the user's current context.
+You should configure the component so that selecting an option immediately confirms it and closes the menu, as shown in the demo below.
 
 {{"demo": "BasicMenu.js"}}
 
@@ -53,13 +60,13 @@ For instance, you can display the menu on top of the anchor:
 
 {{"demo": "PositionedMenu.js"}}
 
-## MenuList composition
+## Composition with Menu List
 
-The `Menu` component uses the `Popover` component internally.
-However, you might want to use a different positioning strategy, or not blocking the scroll.
-For answering those needs, we expose a `MenuList` component that you can compose, with `Popper` in this example.
+The Menu component uses the Popover component internally.
+But you might want to use a different positioning strategy, or prefer not to block scrolling, for example.
 
-The primary responsibility of the `MenuList` component is to handle the focus.
+The Menu List component lets you compose your own menu for these kinds of use cases—its primary purpose is to handle focus.
+See the demo below for an example of composition that uses Menu List and replaces the Menu's default Popover with a Popper component instead:
 
 {{"demo": "MenuListComposition.js", "bg": true}}
 
@@ -79,7 +86,7 @@ You can learn more about this in the [overrides documentation page](/material-ui
 The `MenuItem` is a wrapper around `ListItem` with some additional styles.
 You can use the same list composition features with the `MenuItem` component:
 
-🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/styles/menu/).
+🎨 If you are looking for inspiration, you can check [MUI Treasury's customization examples](https://mui-treasury.com/?path=/docs/menu-introduction--docs).
 
 ## Max height menu
 
@@ -89,7 +96,7 @@ If the height of a menu prevents all menu items from being displayed, the menu c
 
 ## Limitations
 
-There is [a flexbox bug](https://bugs.chromium.org/p/chromium/issues/detail?id=327437) that prevents `text-overflow: ellipsis` from working in a flexbox layout.
+There is [a flexbox bug](https://issues.chromium.org/issues/40344463) that prevents `text-overflow: ellipsis` from working in a flexbox layout.
 You can use the `Typography` component with `noWrap` to workaround this issue:
 
 {{"demo": "TypographyMenu.js", "bg": true}}
@@ -106,12 +113,15 @@ Here is an example of a context menu. (Right click to open.)
 
 {{"demo": "ContextMenu.js"}}
 
-## Complementary projects
+## Supplementary projects
 
 For more advanced use cases you might be able to take advantage of:
 
-### PopupState helper
+### material-ui-popup-state
 
-There is a 3rd party package [`material-ui-popup-state`](https://github.com/jcoreio/material-ui-popup-state) that takes care of menu state for you in most cases.
+![stars](https://img.shields.io/github/stars/jcoreio/material-ui-popup-state?style=social&label=Star)
+![npm downloads](https://img.shields.io/npm/dm/material-ui-popup-state.svg)
+
+The package [`material-ui-popup-state`](https://github.com/jcoreio/material-ui-popup-state) that takes care of menu state for you in most cases.
 
 {{"demo": "MenuPopupState.js"}}

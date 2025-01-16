@@ -35,7 +35,7 @@ export default function InputSubscription() {
           MUI Newsletter
         </FormLabel>
         <Input
-          sx={{ '--Input-decorator-childHeight': '45px' }}
+          sx={{ '--Input-decoratorChildHeight': '45px' }}
           placeholder="mail@mui.com"
           type="email"
           required
@@ -63,7 +63,6 @@ export default function InputSubscription() {
             Oops! something went wrong, please try again later.
           </FormHelperText>
         )}
-
         {data.status === 'sent' && (
           <FormHelperText
             sx={(theme) => ({ color: theme.vars.palette.primary[400] })}

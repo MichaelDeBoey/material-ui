@@ -1,7 +1,8 @@
 import * as React from 'react';
-import Button, { ButtonProps } from '@mui/material/Button';
-import { Link as ReactRouterLink, LinkProps } from 'react-router-dom';
+import { Link as ReactRouterLink, LinkProps } from 'react-router';
 import { expectType } from '@mui/types';
+import Button, { ButtonProps } from '@mui/material/Button';
+import MaterialUiLink, { LinkProps as MaterialUiLinkProps } from '@mui/material/Link';
 
 const log = console.log;
 
@@ -9,9 +10,46 @@ const TestOverride = React.forwardRef<HTMLDivElement, { x?: number }>((props, re
   <div ref={ref} />
 ));
 
+type CustomLinkProps = MaterialUiLinkProps<typeof ReactRouterLink, LinkProps>;
+const CustomLink: React.FC<React.PropsWithChildren<CustomLinkProps>> = ({ children, ...props }) => {
+  return (
+    <MaterialUiLink component={ReactRouterLink} {...props}>
+      {children}
+    </MaterialUiLink>
+  );
+};
+
 function FakeIcon() {
   return <div>Icon</div>;
 }
+
+const props1: ButtonProps<'div'> = {
+  component: 'div',
+  onChange: (event) => {
+    expectType<React.FormEvent<HTMLDivElement>, typeof event>(event);
+  },
+};
+
+const props2: ButtonProps = {
+  onChange: (event) => {
+    expectType<React.FormEvent<HTMLButtonElement>, typeof event>(event);
+  },
+};
+
+const props3: ButtonProps<typeof TestOverride> = {
+  component: TestOverride,
+  x: 2,
+};
+
+const props4: ButtonProps<typeof TestOverride> = {
+  component: TestOverride,
+  // @ts-expect-error TestOverride does not accept incorrectProp
+  incorrectProp: 3,
+};
+
+const props5: ButtonProps<typeof TestOverride> = {
+  component: TestOverride,
+};
 
 const buttonTest = () => (
   <div>
@@ -28,12 +66,15 @@ const buttonTest = () => (
       Title
     </Button>
     <Button component="a">Simple Link</Button>
-    <Button component={(props) => <a {...props} />}>Complex Link</Button>
+    <Button component={(props: any) => <a {...props} />}>Complex Link</Button>
     <Button component={ReactRouterLink} to="/open-collective">
       Link
     </Button>
     <Button href="/open-collective">Link</Button>
     <Button component={ReactRouterLink} to="/open-collective">
+      Link
+    </Button>
+    <Button component={CustomLink} to="/some-route">
       Link
     </Button>
     <Button href="/open-collective">Link</Button>
@@ -42,9 +83,9 @@ const buttonTest = () => (
       ref={(elem) => {
         expectType<HTMLButtonElement | null, typeof elem>(elem);
       }}
-      onClick={(e) => {
-        expectType<React.MouseEvent<HTMLButtonElement, MouseEvent>, typeof e>(e);
-        log(e);
+      onClick={(event) => {
+        expectType<React.MouseEvent<HTMLButtonElement, MouseEvent>, typeof event>(event);
+        log(event);
       }}
     >
       Button
@@ -55,9 +96,9 @@ const buttonTest = () => (
       ref={(elem) => {
         expectType<HTMLAnchorElement | null, typeof elem>(elem);
       }}
-      onClick={(e) => {
-        expectType<React.MouseEvent<HTMLAnchorElement, MouseEvent>, typeof e>(e);
-        log(e);
+      onClick={(event) => {
+        expectType<React.MouseEvent<HTMLAnchorElement, MouseEvent>, typeof event>(event);
+        log(event);
       }}
     >
       Link
@@ -68,9 +109,9 @@ const buttonTest = () => (
       ref={(elem) => {
         expectType<HTMLDivElement | null, typeof elem>(elem);
       }}
-      onClick={(e) => {
-        expectType<React.MouseEvent<HTMLDivElement, MouseEvent>, typeof e>(e);
-        log(e);
+      onClick={(event) => {
+        expectType<React.MouseEvent<HTMLDivElement, MouseEvent>, typeof event>(event);
+        log(event);
       }}
     >
       Div
@@ -104,3 +145,17 @@ const ReactRouterLinkTest = () => {
     </Button>
   );
 };
+
+function ClassesTest() {
+  return (
+    <Button
+      classes={{
+        outlined: 'extra-outlined',
+        loadingIndicator: 'extra-loading-indicator',
+        disabled: 'extra-disabled',
+      }}
+    >
+      Button
+    </Button>
+  );
+}

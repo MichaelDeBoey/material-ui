@@ -1,8 +1,8 @@
 # Breaking changes in v5, part one: styles and themes
 
-<p class="description">This is a reference guide to all of the breaking changes introduced in Material v5, and how to handle them when migrating from v4. This part covers changes to styling and theming.</p>
+<p class="description">This is a reference guide to the breaking changes introduced in Material UI v5, and how to migrating from v4. This part covers changes to styling and theming.</p>
 
-## Material UI v5 migration
+## Material UI v5 migration
 
 1. [Getting started](/material-ui/migration/migration-v4/)
 2. Breaking changes part one: style and theme 👈 _you are here_
@@ -12,7 +12,7 @@
 
 ## Breaking changes, part one
 
-Material UI v5 introduces a number of breaking changes from v4.
+Material UI v5 introduces a number of breaking changes from v4.
 Many of these changes can be resolved automatically using [the codemods](/material-ui/migration/migration-v4/#run-codemods) described in the [main migration guide](/material-ui/migration/migration-v4/).
 
 The following document lists all breaking changes related to styles and themes in v5 and how to address them.
@@ -29,12 +29,14 @@ All other changes must be handled manually.
 
 ## Migrate theme styleOverrides to Emotion
 
+### Refactor local rule references
+
 Although your style overrides defined in the theme may partially work, there is an important difference regarding how the nested elements are styled.
 
 The `$` syntax (local rule reference) used with JSS will not work with Emotion.
 You need to replace those selectors with a valid class selector.
 
-### Replace state class names
+#### Replace state class names
 
 ```diff
  const theme = createTheme({
@@ -53,7 +55,7 @@ You need to replace those selectors with a valid class selector.
  });
 ```
 
-### Replace nested classes selectors with global class names
+#### Replace nested classes selectors with global class names
 
 ```diff
  const theme = createTheme({
@@ -99,6 +101,79 @@ You can rely on this instead of hardcoding the classes.
 
 Take a look at the complete [list of global state classnames](/material-ui/customization/how-to-customize/#state-classes) available.
 
+### Refactor alternative syntax for space- and comma-separated values
+
+The alternative, array-based syntax JSS supports for space- and comma-separated values is not supported by Emotion.
+
+#### Replace array-based values with string-based values
+
+**Before**
+
+```jsx
+const theme = createTheme({
+  overrides: {
+    MuiBox: {
+      root: {
+        background: [
+          ['url(image1.png)', 'no-repeat', 'top'],
+          ['url(image2.png)', 'no-repeat', 'center'],
+          '!important',
+        ],
+      },
+    },
+  },
+});
+```
+
+**After**
+
+```jsx
+const theme = createTheme({
+  components: {
+    MuiBox: {
+      styleOverrides: {
+        root: {
+          background:
+            'url(image1.png) no-repeat top, url(image2.png) no-repeat center !important',
+        },
+      },
+    },
+  },
+});
+```
+
+Be sure to add units to numeric values as appropriate.
+
+**Before**
+
+```jsx
+const theme = createTheme({
+  overrides: {
+    MuiOutlinedInput: {
+      root: {
+        padding: [[5, 8, 6]],
+      },
+    },
+  },
+});
+```
+
+**After**
+
+```jsx
+const theme = createTheme({
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          padding: '5px 8px 6px',
+        },
+      },
+    },
+  },
+});
+```
+
 ## ref
 
 ### Refactor non-ref-forwarding class components
@@ -108,7 +183,7 @@ Support for non-ref-forwarding class components in the `component` prop or as im
 If you were using `unstable_createStrictModeTheme` or didn't see any warnings related to `findDOMNode` in `React.StrictMode` then you don't need to take any further action.
 
 Otherwise check out the [Caveat with refs](/material-ui/guides/composition/#caveat-with-refs) section in the Composition guide to find out how to migrate.
-This change affects almost all components where you're using the `component` prop or passing `children` to components that require `children` to be elements (e.g. `<MenuList><CustomMenuItem /></MenuList>`).
+This change affects almost all components where you're using the `component` prop or passing `children` to components that require `children` to be elements (for example `<MenuList><CustomMenuItem /></MenuList>`).
 
 ### Fix ref type specificity
 
@@ -164,7 +239,7 @@ Here are the specific element types that each component expects:
 
 The style library used by default in v5 is [Emotion](https://emotion.sh/docs/introduction).
 
-If you were using JSS for the style overrides of Material UI components—for example, those created by `makeStyles`—you will need to take care of the CSS injection order.
+If you were using JSS for the style overrides of Material UI components—for example, those created by `makeStyles`—you will need to take care of the CSS injection order.
 JSS `<style`>' elements need to be injected in the `<head>` after Emotion `<style>`' elements.
 
 To do so, you need to have the `StyledEngineProvider` with the `injectFirst` option at the top of your component tree, as shown here:
@@ -177,7 +252,7 @@ export default function GlobalCssPriority() {
   return (
     {/* Inject Emotion before JSS */}
     <StyledEngineProvider injectFirst>
-      {/* Your component tree. Now you can override MUI's styles. */}
+      {/* Your component tree. Now you can override Material UI's styles. */}
     </StyledEngineProvider>
   );
 }
@@ -185,7 +260,7 @@ export default function GlobalCssPriority() {
 
 ### ✅ Add prepend to createCache
 
-If you have a custom cache and are using Emotion to style your app, it will override the cache provided by Material UI.
+If you have a custom cache and are using Emotion to style your app, it will override the cache provided by Material UI.
 
 To correct the injection order, add the `prepend` option to `createCache`, as shown below:
 
@@ -202,7 +277,7 @@ To correct the injection order, add the `prepend` option to `createCache`, as sh
  export default function PlainCssPriority() {
    return (
      <CacheProvider value={cache}>
-       {/* Your component tree. Now you can override Material UI's styles. */}
+       {/* Your component tree. Now you can override Material UI's styles. */}
      </CacheProvider>
    );
  }
@@ -211,7 +286,7 @@ To correct the injection order, add the `prepend` option to `createCache`, as sh
 :::warning
 If you are using styled-components and have a `StyleSheetManager` with a custom `target`, make sure that the target is the first element in the HTML `<head>`.
 
-To see how it can be done, take a look at the [`StyledEngineProvider` implementation](https://github.com/mui/material-ui/blob/master/packages/mui-styled-engine-sc/src/StyledEngineProvider/StyledEngineProvider.js) in the `@mui/styled-engine-sc` package.
+To see how it can be done, take a look at the [`StyledEngineProvider` implementation](https://github.com/mui/material-ui/blob/-/packages/mui-styled-engine-sc/src/StyledEngineProvider/StyledEngineProvider.js) in the `@mui/styled-engine-sc` package.
 :::
 
 ## Theme structure
@@ -233,7 +308,7 @@ For a smoother transition, the `adaptV4Theme` helper allows you to iteratively u
 ```
 
 :::warning
-This adapter only handles the input arguments of `createTheme`.
+This adapter only handles the input arguments of `createTheme()`.
 If you modify the shape of the theme after its creation, you need to migrate the structure manually.
 :::
 
@@ -316,7 +391,7 @@ The default `theme.palette.success` colors were changed to pass the AA accessibi
 
 ### Change default theme.palette.warning colors
 
-The default `theme.palette.warning` colors were changed to pass the AA accesibility standard contrast ratio in both light and dark modes.
+The default `theme.palette.warning` colors were changed to pass the AA accessibility standard contrast ratio in both light and dark modes.
 
 ```diff
   warning = {
@@ -333,7 +408,7 @@ The default `theme.palette.warning` colors were changed to pass the AA accesibil
 
 ### Restore theme.palette.text.hint key (if needed)
 
-The `theme.palette.text.hint` key was unused in Material UI components, and has been removed.
+The `theme.palette.text.hint` key was unused in Material UI components, and has been removed.
 If you depend on it, you can add it back:
 
 ```diff
@@ -397,7 +472,7 @@ The component definitions in the theme were restructured under the `components` 
 
 If you are using the utilities from `@mui/styles` together with the `@mui/material`, you should replace the use of `ThemeProvider` from `@mui/styles` with the one exported from `@mui/material/styles`.
 
-This way, the `theme` provided in the context will be available in both the styling utilities exported from `@mui/styles`, like `makeStyles`, `withStyles`, etc., along with the Material UI components.
+This way, the `theme` provided in the context will be available in both the styling utilities exported from `@mui/styles`, like `makeStyles`, `withStyles`, etc., along with the Material UI components.
 
 ```diff
 -import { ThemeProvider } from '@mui/styles';
@@ -436,7 +511,7 @@ Nested imports of more than one level are private. For example, you can no longe
 
 ### ✅ Rename fade to alpha
 
-`fade` was renamed to `alpha` to better describe its functionality.
+`fade()` was renamed to `alpha()` to better describe its functionality.
 
 The previous name caused confusion when the input color already had an alpha value. The helper overrides the alpha value of the color.
 
@@ -452,7 +527,7 @@ The previous name caused confusion when the input color already had an alpha val
 
 ### ✅ Update createStyles import
 
-The `createStyles` function from `@mui/material/styles` was moved to the one exported from `@mui/styles`. It is necessary for removing the dependency on `@mui/styles` in the Material UI npm package.
+The `createStyles` function from `@mui/material/styles` was moved to the one exported from `@mui/styles`. It is necessary for removing the dependency on `@mui/styles` in the Material UI npm package.
 
 ```diff
 -import { createStyles } from '@mui/material/styles';
@@ -461,7 +536,8 @@ The `createStyles` function from `@mui/material/styles` was moved to the one exp
 
 ### ✅ Update createGenerateClassName import
 
-The `createGenerateClassName` function is no longer exported from `@mui/material/styles`. You should import it directly from `@mui/styles`.
+The `createGenerateClassName` function is no longer exported from `@mui/material/styles`.
+You can import it from the deprecated `@mui/styles` package if you need to continue using it.
 
 ```diff
 -import { createGenerateClassName } from '@mui/material/styles';
@@ -472,7 +548,7 @@ To generate custom class names without using `@mui/styles`, check out [ClassName
 
 ### ✅ Rename createMuiTheme
 
-The function `createMuiTheme` was renamed to `createTheme` to make it more intuitive to use with `ThemeProvider`.
+The function `createMuiTheme` was renamed to `createTheme()` to make it more intuitive to use with `ThemeProvider`.
 
 ```diff
 -import { createMuiTheme } from '@mui/material/styles';
@@ -493,7 +569,8 @@ The `MuiThemeProvider` component is no longer exported from `@mui/material/style
 
 ### ✅ Update jssPreset import
 
-The `jssPreset` object is no longer exported from `@mui/material/styles`. You should import it directly from `@mui/styles`.
+The `jssPreset` object is no longer exported from `@mui/material/styles`.
+You can import it from the deprecated `@mui/styles` package if you need to continue using it.
 
 ```diff
 -import { jssPreset } from '@mui/material/styles';
@@ -502,8 +579,8 @@ The `jssPreset` object is no longer exported from `@mui/material/styles`. You sh
 
 ### ✅ Update `makeStyles` import
 
-The `makeStyles` JSS utility is no longer exported from `@mui/material/styles`.
-You can use `@mui/styles/makeStyles` instead.
+Since Material UI v5 doesn't use JSS, the JSS-based `makeStyles` utility is no longer exported by `@mui/material/styles`.
+While migrating your app away from JSS, you can temporarily import this deprecated utility from `@mui/styles/makeStyles` before refactoring your components further.
 
 Make sure to add a `ThemeProvider` at the root of your application, as the `defaultTheme` is no longer available.
 
@@ -532,7 +609,8 @@ If you are using this utility together with `@mui/material`, it's recommended th
 
 ### ✅ Update ServerStyleSheets import
 
-The `ServerStyleSheets` component is no longer exported from `@mui/material/styles`. You should import it directly from `@mui/styles`.
+The `ServerStyleSheets` component is no longer exported from `@mui/material/styles`.
+You can import it from the deprecated `@mui/styles` package if you need to continue using it.
 
 ```diff
 -import { ServerStyleSheets } from '@mui/material/styles';
@@ -541,7 +619,8 @@ The `ServerStyleSheets` component is no longer exported from `@mui/material/styl
 
 ### styled
 
-The `styled` JSS utility is no longer exported from `@mui/material/styles`. You can use the one exported from `@mui/styles` instead.
+Since Material UI v5 doesn't use JSS, the JSS-based `styled` utility exported by `@mui/material/styles` has been replaced with an equivalent Emotion-based utility that's not backwards compatible.
+While migrating your app away from JSS, you can temporarily import the JSS-based utility from the deprecated `@mui/styles` package before refactoring your components further.
 
 Make sure to add a `ThemeProvider` at the root of your application, as the `defaultTheme` is no longer available.
 
@@ -563,7 +642,8 @@ If you are using this utility together with `@mui/material`, it's recommended yo
 
 ### ✅ Update StylesProvider import
 
-The `StylesProvider` component is no longer exported from `@mui/material/styles`. You should import it directly from `@mui/styles`.
+The `StylesProvider` component is no longer exported from `@mui/material/styles`.
+You can import it from the deprecated `@mui/styles` package if you need to continue using it.
 
 ```diff
 -import { StylesProvider } from '@mui/material/styles';
@@ -573,7 +653,7 @@ The `StylesProvider` component is no longer exported from `@mui/material/styles`
 ### ✅ Update useThemeVariants import
 
 The `useThemeVariants` hook is no longer exported from `@mui/material/styles`.
-You should import it directly from `@mui/styles`.
+You can import it from the deprecated `@mui/styles` package if you need to continue using it.
 
 ```diff
 -import { useThemeVariants } from '@mui/material/styles';
@@ -582,8 +662,8 @@ You should import it directly from `@mui/styles`.
 
 ### ✅ Update withStyles import
 
-The `withStyles` JSS utility is no longer exported from `@mui/material/styles`.
-You can use `@mui/styles/withStyles` instead.
+Since Material UI v5 doesn't use JSS, the JSS-based `withStyles` utility is no longer exported by `@mui/material/styles`.
+While migrating your app away from JSS, you can temporarily import this deprecated utility from `@mui/styles/withStyles` before refactoring your components further.
 
 Make sure to add a `ThemeProvider` at the root of your application, as the `defaultTheme` is no longer available.
 
@@ -641,7 +721,7 @@ If you are using this utility together with `@mui/material`, it's recommended yo
 +import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 +const theme = createTheme();
-  const MyComponent = withTheme(({ theme }) => <div>{props.theme.direction}</div>);
+  const MyComponent = withTheme(({ theme }) => <div>{theme.direction}</div>);
 
   function App(props) {
 -  return <MyComponent />;
@@ -661,7 +741,7 @@ The GitHub icon was reduced in size from 24px to 22px wide to match the size of 
 
 ## @material-ui/pickers
 
-We have a [dedicated page](/material-ui/guides/pickers-migration/) for migrating `@material-ui/pickers` to v5.
+We have a [dedicated page](/material-ui/migration/pickers-migration/) for migrating `@material-ui/pickers` to v5.
 
 ## System
 

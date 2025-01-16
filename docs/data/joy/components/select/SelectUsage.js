@@ -12,7 +12,7 @@ export default function SelectUsage() {
       data={[
         {
           propName: 'variant',
-          knob: 'select',
+          knob: 'radio',
           defaultValue: 'outlined',
           options: ['plain', 'outlined', 'soft', 'solid'],
         },
@@ -39,15 +39,16 @@ export default function SelectUsage() {
         },
         {
           propName: 'children',
-          defaultValue: `<Option>...</Option>`,
+          defaultValue: '<Option>...</Option>',
         },
       ]}
       renderDemo={(props) => (
         <Select
           {...props}
+          defaultListboxOpen
           action={action}
           value={value}
-          onChange={(e, newValue) => setValue(newValue)}
+          onChange={(event, newValue) => setValue(newValue)}
           sx={{ minWidth: 160, mb: 20 }}
         >
           <Option value="react">React</Option>

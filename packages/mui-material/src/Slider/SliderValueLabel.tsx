@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -25,6 +26,10 @@ export default function SliderValueLabel(props: SliderValueLabelProps) {
   const { children, className, value } = props;
   const classes = useValueLabelClasses(props);
 
+  if (!children) {
+    return null;
+  }
+
   return React.cloneElement(
     children,
     {
@@ -45,4 +50,4 @@ SliderValueLabel.propTypes = {
   children: PropTypes.element.isRequired,
   className: PropTypes.string,
   value: PropTypes.node,
-};
+} as any;

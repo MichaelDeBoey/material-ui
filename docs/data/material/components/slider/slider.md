@@ -1,11 +1,12 @@
 ---
-product: material-ui
+productId: material-ui
 title: React Slider component
 components: Slider
 githubLabel: 'component: slider'
 materialDesign: https://m2.material.io/components/sliders
-waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/slidertwothumb/
-unstyled: /base/react-slider/
+waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/
+unstyled: /base-ui/react-slider/
+githubSource: packages/mui-material/src/Slider
 ---
 
 # Slider
@@ -14,7 +15,7 @@ unstyled: /base/react-slider/
 
 Sliders reflect a range of values along a bar, from which users may select a single value. They are ideal for adjusting settings such as volume, brightness, or applying image filters.
 
-{{"component": "modules/components/ComponentLinkHeader.js"}}
+{{"component": "@mui/docs/ComponentLinkHeader"}}
 
 ## Continuous sliders
 
@@ -38,6 +39,7 @@ You can generate a mark for each step with `marks={true}`.
 ### Small steps
 
 You can change the default step increment.
+Make sure to adjust the `shiftStep` prop (the granularity with which the slider can step when using Page Up/Down or Shift + Arrow Up/Down) to a value divadable with the `step`.
 
 {{"demo": "DiscreteSliderSteps.js"}}
 
@@ -92,21 +94,32 @@ You can learn more about this in the [overrides documentation page](/material-ui
 
 ### Music player
 
-{{"demo": "MusicPlayerSlider.js"}}
+{{"demo": "MusicPlayerSlider.js", "bg": "inline"}}
 
 ## Vertical sliders
 
+Set the `orientation` prop to `"vertical"` to create vertical sliders. The thumb will track vertical movement instead of horizontal movement.
+
 {{"demo": "VerticalSlider.js"}}
 
-**WARNING**: Chrome, Safari and newer Edge versions i.e. any browser based on WebKit exposes `<Slider orientation="vertical" />` as horizontal ([chromium issue #1158217](https://bugs.chromium.org/p/chromium/issues/detail?id=1158217)).
-By applying `-webkit-appearance: slider-vertical;` the slider is exposed as vertical.
+:::warning
+Chrome versions below 124 implement `aria-orientation` incorrectly for vertical sliders and expose them as `'horizontal'` in the accessibility tree. ([Chromium issue #40736841](https://issues.chromium.org/issues/40736841))
 
-However, by applying `-webkit-appearance: slider-vertical;` keyboard navigation for horizontal keys (<kbd class="key">Arrow Left</kbd>, <kbd class="key">Arrow Right</kbd>) is reversed ([chromium issue #1162640](https://bugs.chromium.org/p/chromium/issues/detail?id=1162640)).
-Usually, up and right should increase and left and down should decrease the value.
-If you apply `-webkit-appearance` you could prevent keyboard navigation for horizontal arrow keys for a truly vertical slider.
-This might be less confusing to users compared to a change in direction.
+The `-webkit-appearance: slider-vertical` CSS property can be used to correct this for these older versions, with the trade-off of causing a console warning in newer Chrome versions:
 
-{{"demo": "VerticalAccessibleSlider.js"}}
+```css
+.MuiSlider-thumb input {
+  -webkit-appearance: slider-vertical;
+}
+```
+
+:::
+
+## Marks placement
+
+You can customize your slider by adding and repositioning marks for minimum and maximum values.
+
+{{"demo": "CustomMarks.js"}}
 
 ## Track
 
@@ -135,7 +148,7 @@ Increasing _x_ by one increases the represented value by factor _2_.
 
 ## Accessibility
 
-(WAI-ARIA: https://www.w3.org/WAI/ARIA/apg/patterns/slidertwothumb/)
+(WAI-ARIA: https://www.w3.org/WAI/ARIA/apg/patterns/slider-multithumb/)
 
 The component handles most of the work necessary to make it accessible.
 However, you need to make sure that:
@@ -144,17 +157,3 @@ However, you need to make sure that:
 - Each thumb has a user-friendly text for its current value.
   This is not required if the value matches the semantics of the label.
   You can change the name with the `getAriaValueText` or `aria-valuetext` prop.
-
-## Limitations
-
-### IE 11
-
-The slider's value label is not centered in IE 11.
-The alignement is not handled to make customizations easier with the lastest browsers.
-You can solve the issue with:
-
-```css
-.MuiSlider-valueLabel {
-  left: calc(-50% - 4px);
-}
-```

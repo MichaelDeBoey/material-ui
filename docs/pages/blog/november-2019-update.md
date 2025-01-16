@@ -4,6 +4,7 @@ description: Here are the most significant improvements in November.
 date: 2019-12-12T00:00:00.000Z
 authors: ['oliviertassinari']
 tags: ['Company']
+manualCard: true
 ---
 
 Here are the most significant improvements in November:
@@ -13,11 +14,15 @@ Here are the most significant improvements in November:
 
 - 👤 We have improved the Avatar's loading experience ([#1871](https://github.com/mui/material-ui/pull/18711)).
 
-  ![Loading avatar before](/static/blog/november-2019-update/loading-avatar-before.gif)
+  <video autoplay muted loop playsinline width="872" height="154">
+    <source src="/static/blog/november-2019-update/loading-avatar-before.mp4" type="video/mp4" />
+  </video>
 
   <p class="blog-description">Before</p>
 
-  ![Loading avatar after](/static/blog/november-2019-update/loading-avatar-after.gif)
+  <video autoplay muted loop playsinline width="872" height="154">
+    <source src="/static/blog/november-2019-update/loading-avatar-after.mp4" type="video/mp4" />
+  </video>
 
   <p class="blog-description">After</p>
 
@@ -52,6 +57,6 @@ We have three major efforts undergoing, we will likely need a couple of months t
   To get a rough idea of what's coming, you can read [this blog post](https://uxdesign.cc/design-better-data-tables-4ecc99d23356).
 
 - 💅 We might initiate an update of our styling solution.
-  We want to cover styled-component [#6115](https://github.com/mui/material-ui/pull/#6115), the system [#15561](https://github.com/mui/material-ui/issues/15561), dynamic props [#15573](https://github.com/mui/material-ui/issues/15573) and an unstyled version [#6218](https://github.com/mui/material-ui/pull/6218).
+  We want to cover styled-component [#6115](https://github.com/mui/material-ui/pull/#6115), MUI System [#15561](https://github.com/mui/material-ui/issues/15561), dynamic props [#15573](https://github.com/mui/material-ui/issues/15573) and an unstyled version [#6218](https://github.com/mui/material-ui/pull/6218).
 
 ❓ Please upvote our [GitHub issues](https://github.com/mui/material-ui/issues) if you want something specific. The number of 👍 helps us to prioritize.

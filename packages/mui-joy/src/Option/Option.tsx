@@ -1,13 +1,15 @@
+'use client';
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { unstable_composeClasses as composeClasses } from '@mui/base/composeClasses';
+import { useOption, useOptionContextStabilizer } from '@mui/base/useOption';
 import { unstable_useForkRef as useForkRef } from '@mui/utils';
-import composeClasses from '@mui/base/composeClasses';
-import { useSlotProps } from '@mui/base/utils';
-import { SelectUnstyledContext } from '@mui/base/SelectUnstyled';
+import { ListContext } from '@mui/base/useList';
+import useSlot from '../utils/useSlot';
 import { StyledListItemButton } from '../ListItemButton/ListItemButton';
 import { styled, useThemeProps } from '../styles';
-import { useColorInversion } from '../styles/ColorInversion';
-import { OptionOwnerState, ExtendOption, OptionTypeMap } from './OptionProps';
+import { useVariantColor } from '../styles/variantColorInheritance';
+import { OptionOwnerState, ExtendOption, OptionTypeMap, OptionProps } from './OptionProps';
 import optionClasses, { getOptionUtilityClass } from './optionClasses';
 import RowListContext from '../List/RowListContext';
 
@@ -21,20 +23,23 @@ const useUtilityClasses = (ownerState: OptionOwnerState) => {
   return composeClasses(slots, getOptionUtilityClass, {});
 };
 
-const OptionRoot = styled(StyledListItemButton as unknown as 'button', {
+const OptionRoot = styled(StyledListItemButton as unknown as 'li', {
   name: 'JoyOption',
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root,
 })<{ ownerState: OptionOwnerState }>(({ theme, ownerState }) => {
   const variantStyle = theme.variants[`${ownerState.variant!}Hover`]?.[ownerState.color!];
   return {
-    [`&.${optionClasses.highlighted}`]: {
+    [`&.${optionClasses.highlighted}:not([aria-selected="true"])`]: {
       backgroundColor: variantStyle?.backgroundColor,
     },
   };
 });
 
-const Option = React.forwardRef(function Option(inProps, ref) {
+const InnerOption = React.forwardRef(function InnerOption(
+  inProps: OptionProps,
+  ref: React.ForwardedRef<HTMLLIElement>,
+) {
   const props = useThemeProps<typeof inProps & { component?: React.ElementType }>({
     props: inProps,
     name: 'JoyOption',
@@ -43,86 +48,77 @@ const Option = React.forwardRef(function Option(inProps, ref) {
   const {
     component = 'li',
     children,
-    disabled,
+    disabled = false,
     value,
     label,
-    variant = 'plain',
+    variant: variantProp = 'plain',
     color: colorProp = 'neutral',
+    slots = {},
+    slotProps = {},
     ...other
   } = props;
 
   const row = React.useContext(RowListContext);
-  const selectContext = React.useContext(SelectUnstyledContext);
+  const { variant = variantProp, color = colorProp } = useVariantColor(
+    inProps.variant,
+    inProps.color,
+  );
+  const optionRef = React.useRef<HTMLLIElement>(null);
+  const combinedRef = useForkRef(optionRef, ref);
 
-  if (!selectContext) {
-    throw new Error('OptionUnstyled must be used within a SelectUnstyled');
-  }
+  const computedLabel =
+    label ?? (typeof children === 'string' ? children : optionRef.current?.innerText);
 
-  const selectOption = {
-    value,
-    label: label || children,
+  const { getRootProps, selected, highlighted, index } = useOption({
     disabled,
-  };
+    label: computedLabel,
+    value,
+    rootRef: combinedRef,
+  });
 
-  const optionState = selectContext.getOptionState(selectOption);
-  const optionProps = selectContext.getOptionProps(selectOption);
-  const listboxRef = selectContext.listboxRef;
-
-  const { getColor } = useColorInversion(variant);
-  const color = getColor(inProps.color, optionState.selected ? 'primary' : colorProp);
-
-  const ownerState = {
+  const ownerState: OptionOwnerState = {
     ...props,
-    ...optionState,
+    disabled,
+    selected,
+    highlighted,
+    index,
     component,
     variant,
     color,
     row,
   };
 
-  const optionRef = React.useRef<HTMLLIElement>(null);
-  const handleRef = useForkRef(ref, optionRef);
-
-  React.useEffect(() => {
-    // Scroll to the currently highlighted option
-    if (optionState.highlighted) {
-      if (!listboxRef.current || !optionRef.current) {
-        return;
-      }
-      const listboxClientRect = listboxRef.current.getBoundingClientRect();
-      const optionClientRect = optionRef.current.getBoundingClientRect();
-
-      if (optionClientRect.top < listboxClientRect.top) {
-        listboxRef.current.scrollTop -= listboxClientRect.top - optionClientRect.top;
-      } else if (optionClientRect.bottom > listboxClientRect.bottom) {
-        listboxRef.current.scrollTop += optionClientRect.bottom - listboxClientRect.bottom;
-      }
-    }
-  }, [optionState.highlighted, listboxRef]);
-
   const classes = useUtilityClasses(ownerState);
+  const externalForwardedProps = { ...other, component, slots, slotProps };
 
-  const rootProps = useSlotProps({
+  const [SlotRoot, rootProps] = useSlot('root', {
+    ref,
+    getSlotProps: getRootProps,
     elementType: OptionRoot,
-    externalSlotProps: {},
-    externalForwardedProps: other,
-    additionalProps: {
-      ...optionProps,
-      ref: handleRef,
-      as: component,
-    },
+    externalForwardedProps,
     className: classes.root,
     ownerState,
   });
 
-  return <OptionRoot {...rootProps}>{children}</OptionRoot>;
-}) as ExtendOption<OptionTypeMap>;
+  return <SlotRoot {...rootProps}>{children}</SlotRoot>;
+});
 
-Option.propTypes /* remove-proptypes */ = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
+/**
+ *
+ * Demos:
+ *
+ * - [Select](https://mui.com/joy-ui/react-select/)
+ *
+ * API:
+ *
+ * - [Option API](https://mui.com/joy-ui/api/option/)
+ */
+
+InnerOption.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
   /**
    * The content of the component.
    */
@@ -132,14 +128,101 @@ Option.propTypes /* remove-proptypes */ = {
    * @default 'neutral'
    */
   color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
-    PropTypes.oneOf(['danger', 'info', 'neutral', 'primary', 'success', 'warning']),
+    PropTypes.oneOf(['danger', 'neutral', 'primary', 'success', 'warning']),
     PropTypes.string,
   ]),
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
   component: PropTypes.elementType,
+  /**
+   * If `true`, the component is disabled.
+   * @default false
+   */
+  disabled: PropTypes.bool,
+  /**
+   * A text representation of the option's content.
+   * Used for keyboard text navigation matching.
+   */
+  label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  /**
+   * The props used for each slot inside.
+   * @default {}
+   */
+  slotProps: PropTypes.shape({
+    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  }),
+  /**
+   * The components used for each slot inside.
+   * @default {}
+   */
+  slots: PropTypes.shape({
+    root: PropTypes.elementType,
+  }),
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])),
+    PropTypes.func,
+    PropTypes.object,
+  ]),
+  /**
+   * The option value.
+   */
+  value: PropTypes.any.isRequired,
+  /**
+   * The [global variant](https://mui.com/joy-ui/main-features/global-variants/) to use.
+   * @default 'plain'
+   */
+  variant: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+    PropTypes.oneOf(['outlined', 'plain', 'soft', 'solid']),
+    PropTypes.string,
+  ]),
+} as any;
+
+const Option = React.memo(InnerOption);
+/**
+ *
+ * Demos:
+ *
+ * - [Select](https://mui.com/joy-ui/react-select/)
+ *
+ * API:
+ *
+ * - [Option API](https://mui.com/joy-ui/api/option/)
+ */
+const StableOption = React.forwardRef(function StableOption(
+  props: OptionProps,
+  ref: React.ForwardedRef<HTMLLIElement>,
+) {
+  // This wrapper component is used as a performance optimization.
+  // `useOptionContextStabilizer` ensures that the context value
+  // is stable across renders, so that the actual Option re-renders
+  // only when it needs to.
+  const { contextValue } = useOptionContextStabilizer(props.value);
+
+  return (
+    <ListContext.Provider value={contextValue}>
+      <Option {...props} ref={ref} />
+    </ListContext.Provider>
+  );
+}) as ExtendOption<OptionTypeMap>;
+
+StableOption.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * The content of the component.
+   */
+  children: PropTypes.node,
+  /**
+   * The color of the component. It supports those theme colors that make sense for this component.
+   * @default 'neutral'
+   */
+  color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+    PropTypes.oneOf(['danger', 'neutral', 'primary', 'success', 'warning']),
+    PropTypes.string,
+  ]),
   /**
    * If `true`, the component is disabled.
    * @default false
@@ -161,9 +244,9 @@ Option.propTypes /* remove-proptypes */ = {
   /**
    * The option value.
    */
-  value: PropTypes.any,
+  value: PropTypes.any.isRequired,
   /**
-   * The variant to use.
+   * The [global variant](https://mui.com/joy-ui/main-features/global-variants/) to use.
    * @default 'plain'
    */
   variant: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
@@ -172,4 +255,4 @@ Option.propTypes /* remove-proptypes */ = {
   ]),
 } as any;
 
-export default Option;
+export default StableOption;

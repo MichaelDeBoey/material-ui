@@ -5,13 +5,13 @@ declare module '@mui/material/styles' {
     poster: React.CSSProperties;
   }
 
-  // allow configuration using `createTheme`
+  // allow configuration using `createTheme()`
   interface TypographyVariantsOptions {
     poster?: React.CSSProperties;
   }
 }
 
-// Update the Typography's variant prop options. Also needed for custom variants options in reponsiveFontSizes.
+// Update the Typography's variant prop options. Also needed for custom variants options in responsiveFontSizes.
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     poster: true;
